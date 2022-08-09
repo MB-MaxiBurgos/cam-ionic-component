@@ -37,26 +37,24 @@ const Tab2: React.FC = () => {
   }
 
   const convertBlobToBase64: any = (blob: Blob) => {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onerror = reject;
       reader.onload = () => {
         resolve(reader.result);
       };
       reader.readAsDataURL(blob);
-    }).then((res) => {
-      console.log(res);
-      return res;
     });
   };
 
   useEffect(() => {
     //console.log(photo);
+    //esto es para el back
     photo &&
       (async () => {
-        await changeToBlob(photo?.base64String).then((res) =>
-          console.log(convertBlobToBase64(res))
-        );
+        await changeToBlob(photo?.base64String).then((res) => {
+          convertBlobToBase64(res).then((res: any) => console.log(res));
+        });
       })();
   }, [photo]);
 
