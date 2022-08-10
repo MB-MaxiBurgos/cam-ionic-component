@@ -10,14 +10,21 @@ export function usePhoto() {
   const [photo, setPhoto] = useState<Photo>();
 
   const takePhoto = async () => {
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Base64,
-      source: CameraSource.Camera,
-      quality: 100,
-      presentationStyle: "fullscreen",
-    });
-    setPhoto(photo);
+    try {
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+        quality: 100,
+        correctOrientation: false,
+        webUseInput: true,
+      });
+      setPhoto(photo);
+    } catch {
+      console.log("Usuario cerro el dialogo");
+    }
   };
+  /* const fileName = new Date().getTime() + ".jpeg";
+  Storage.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) }); */
 
   return {
     photo,

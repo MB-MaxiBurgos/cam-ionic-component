@@ -20,16 +20,7 @@ import { camera } from "ionicons/icons";
 const Tab2: React.FC = () => {
   const { photo, takePhoto } = usePhoto();
 
-  function showPhoto(): string {
-    // If running on the web...
-    if (!isPlatform("hybrid")) {
-      // Web platform only: Load the photo as base64 data
-      return `data:image/jpeg;base64,${photo?.base64String}`;
-    } else {
-      return `${photo?.base64String}`;
-    }
-  }
-
+  /* 
   async function changeToBlob(base64Data: any) {
     //const base64 = await fetch(base64Data);
     const base64Response = await fetch(`data:image/jpeg;base64,${base64Data}`);
@@ -56,7 +47,7 @@ const Tab2: React.FC = () => {
           convertBlobToBase64(res).then((res: any) => console.log(res));
         });
       })();
-  }, [photo]);
+  }, [photo]); */
 
   return (
     <IonPage>
@@ -71,12 +62,10 @@ const Tab2: React.FC = () => {
             <IonTitle size="large">Tab 2</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonCard mode={isPlatform("hybrid") ? "md" : undefined}>
+        <IonCard>
           <IonCardContent>
             {photo ? (
-              <IonImg
-                src={photo && `data:image/jpeg;base64,${photo?.base64String}`}
-              />
+              <IonImg src={photo.dataUrl} />
             ) : (
               "aca se va a mostrar la foto de la firma"
             )}
